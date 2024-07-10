@@ -18,9 +18,11 @@ export default function Mainarea() {
   let Remaining_amt;
   
   const [totalintrest,setTotalintrest]=useState('');
+  const [intrest,setintrest]=useState('');
 
   const intrestcalculate=()=>{
     let total_intrest=data.loanamount*data.intrest;
+    setintrest(total_intrest);
     setTotalintrest(total_intrest);
   }
   
@@ -28,9 +30,11 @@ export default function Mainarea() {
   
   const [result,setResult]=useState('')
   const loancalculate=(e)=>{
+    window.location.href="#LoanDetails";
       e.preventDefault();
-  if (totalintrest==='') {
-    alert("Please Fill all box")
+  if (totalintrest!==intrest) {
+    // alert("Please Fill all box")
+    alert('Please click Total intrest'+totalintrest+intrest)
   }
   // else {
     // total_loan_amt=parseInt(totalintrest) + parseInt(data.loanamount);
@@ -83,29 +87,31 @@ export default function Mainarea() {
       <form className='flex flex-col items-center justify-center m-8 p-3' >
         <div className='p-5'>
             <label className='p-9'>Loan Amount </label>
-            <input type='text' name='loanamount'  placeholder='Enter a loan amount' onChange={handleChange} value={data.loanamount} ></input>
+            <input type='text' name='loanamount' className='p-2 rounded-md' placeholder='Enter a loan amount' onChange={handleChange} value={data.loanamount} ></input>
         </div>
         <div className='p-5'>
             <label className='p-16 '>Intrest</label>
-            <input type='text' name='intrest' placeholder='Enter a intreast' value={data.intrest} onChange={handleChange}/>
+            <input type='text' name='intrest' className='p-2 rounded-md' placeholder=' Intreast Eg: 0.5 ,0.11 etc' value={data.intrest} onChange={handleChange}/>
         </div>
         <div className='p-5'>
         <label className='p-11'>Total Intrest</label>
-        <input type='text' value={totalintrest} placeholder='Click here' className='' onClick={intrestcalculate} required></input>
+        <input type='text' className='p-2 rounded-md' value={totalintrest} placeholder='Click here'  onClick={intrestcalculate} required></input>
         </div>
         
         <div className='p-5'>
             <label className='p-9'>Payment Type </label>
-            <input type='text' name='paymenttype'  placeholder='Eg: month/week/year' value={data.paymenttype} onChange={handleChange}></input>
+            <input type='text' className='p-2 rounded-md' name='paymenttype'  placeholder='Eg: month/week/year' value={data.paymenttype} onChange={handleChange}></input>
         </div>
         <div className='p-5'>
             <label className='p-14'>Amount</label>
-            <input type='text' name='amount' placeholder='Payment Amount'value={data.amount} onChange={handleChange} ></input>
+            <input type='text' name='amount' className='p-2 rounded-md max-w-fit' placeholder='Payment Amount'value={data.amount} onChange={handleChange} ></input>
         </div>
-        <button className='bg-blue-600 p-2 rounded-lg ' onClick={loancalculate}>Submit</button>
+      
+        <button className='bg-blue-600 p-2 rounded-lg '  onClick={loancalculate}>Submit</button>
+        
       </form>
     </div>
-    <div className='flex flex-col justify-center items-center'>     
+    <div className='flex flex-col justify-center items-center' id='LoanDetails'>     
                 <h1 className=' justify-center font-extrabold text-white text-lg bg-gray-900 p-1 m-5'>Loan Details</h1>
                 <p>Your Total Loan :{total_loan_amt}</p>
                 <p>You Should Pay Every {data.paymenttype}: {data.amount}</p>
@@ -114,5 +120,6 @@ export default function Mainarea() {
 
             </div>
     </>
+
   );
 }
